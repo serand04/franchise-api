@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: franchise-api
+
+server:
+  port: 8080
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretKey: ${AWS_SECRET_ACCESS_KEY}
+  # dynamodb.endpoint intentionally absent -> uses real AWS DynamoDB
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.accenture: INFO

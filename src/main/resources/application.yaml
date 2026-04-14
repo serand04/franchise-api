@@ -1,3 +1,28 @@
 spring:
   application:
     name: franchise-api
+  webflux:
+    base-path: /
+
+server:
+  port: 8080
+
+aws:
+  region: us-east-1
+  dynamodb:
+    endpoint: http://localstack:4566
+  accessKeyId: local
+  secretKey: local
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+logging:
+  level:
+    com.accenture: DEBUG
+    software.amazon.awssdk: WARN
