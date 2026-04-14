@@ -24,7 +24,7 @@ public class DynamoDbTableInitializer {
         try {
             dynamoDbClient.describeTable(DescribeTableRequest.builder()
                     .tableName("franchises")
-                    .build();
+                    .build());
             log.info("Dynamo table 'franchises' already exists.");
         } catch (ResourceNotFoundException e) {
             log.info("Creating DynamoDB table 'franchises'...");

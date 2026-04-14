@@ -15,7 +15,7 @@ import java.net.URI;
 @Configuration
 public class DynamoDbConfig {
 
-    @Value("${aws.dynamodb.endpoint:")
+    @Value("${aws.dynamodb.endpoint:}")
     private String endpointOverride;
 
     @Value("${aws.region:us-east-1}")
@@ -35,6 +35,7 @@ public class DynamoDbConfig {
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
                                 AwsBasicCredentials.create(accessKeyId, secretKey)));
+
         if (endpointOverride != null && !endpointOverride.isBlank()) {
             builder.endpointOverride(URI.create(endpointOverride));
         }
@@ -48,5 +49,4 @@ public class DynamoDbConfig {
                 .dynamoDbClient(dynamoDbClient)
                 .build();
     }
-
 }

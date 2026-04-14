@@ -78,7 +78,7 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
                     Branch branch = franchise.getBranches().stream()
                             .filter(b -> b.getId().equals(branchId))
                             .findFirst()
-                            .orElseThrow(() -> new RuntimeException("Branch not foud: " + branchId));
+                            .orElseThrow(() -> new RuntimeException("Branch not found: " + branchId));
                     Product product = Product.builder()
                             .id(UUID.randomUUID().toString())
                             .name(productName)
@@ -94,7 +94,7 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
     public Mono<Franchise> removeProduct(String franchiseId, String branchId, String productId) {
         return franchiseRepository.findById(franchiseId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Franchise not found: " + franchiseId)))
-                .map(franchise ->  {
+                .map(franchise -> {
                     Branch branch = franchise.getBranches().stream()
                             .filter(b -> b.getId().equals(branchId))
                             .findFirst()
@@ -109,11 +109,11 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
     public Mono<Franchise> updateProductStock(String franchiseId, String branchId, String productId, int newStock) {
         return franchiseRepository.findById(franchiseId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Franchise not found: " + franchiseId)))
-                .map(franchise ->  {
+                .map(franchise -> {
                     franchise.getBranches().stream()
                             .filter(b -> b.getId().equals(branchId))
                             .findFirst()
-                            .orElseThrow(() -> new RuntimeException("Branch not douf: " + branchId))
+                            .orElseThrow(() -> new RuntimeException("Branch not found: " + branchId))
                             .getProducts().stream()
                             .filter(p -> p.getId().equals(productId))
                             .findFirst()
@@ -160,5 +160,4 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
                                 .stock(product.getStock())
                                 .build()));
     }
-
 }
