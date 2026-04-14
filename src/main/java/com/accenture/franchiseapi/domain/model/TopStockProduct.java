@@ -14,5 +14,5 @@ public class TopStockProduct {
     private String branchName;
     private String productId;
     private String productName;
-    private int Stock;
+    private int stock;
 }

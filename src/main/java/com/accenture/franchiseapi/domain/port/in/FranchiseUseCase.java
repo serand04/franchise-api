@@ -15,3 +15,4 @@ public interface FranchiseUseCase {
     Mono<Franchise> updateProductStock(String franchiseId, String branchId, String productId, int newStock);
     Mono<Franchise> updateProductName(String franchiseId, String branchId, String productId, String newName);
     Flux<TopStockProduct> getTopStockProductsPerBranch(String franchiseId);
+}

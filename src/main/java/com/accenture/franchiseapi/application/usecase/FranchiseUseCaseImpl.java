@@ -65,7 +65,7 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("Branch not found: " + branchId))
                             .setName(newName);
-                    return franchise
+                    return franchise;
                 })
                 .flatMap(franchiseRepository::save);
     }
@@ -99,7 +99,7 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
                             .filter(b -> b.getId().equals(branchId))
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("Branch not found: " + branchId));
-                    branch.getProducts().removeIf(p -> p.getId().equals(productId)):
+                    branch.getProducts().removeIf(p -> p.getId().equals(productId));
                     return franchise;
                 })
                 .flatMap(franchiseRepository::save);
@@ -138,7 +138,7 @@ public class FranchiseUseCaseImpl implements FranchiseUseCase {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("Product not found: " + productId))
                             .setName(newName);
-                    return franchise
+                    return franchise;
                 })
                 .flatMap(franchiseRepository::save);
     }
