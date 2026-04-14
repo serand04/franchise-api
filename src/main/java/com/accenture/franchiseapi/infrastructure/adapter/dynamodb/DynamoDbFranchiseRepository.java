@@ -28,19 +28,19 @@ public class DynamoDbFranchiseRepository implements FranchiseRepository {
                     FranchiseEntity entity = mapper.toEntity(franchise);
                     table().putItem(entity);
                     return mapper.toDomain(entity);
-            })
-            .subscribeOn(Schedulers.boundedElastic()));
+                })
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
     public Mono<Franchise> findById(String id) {
         return Mono.fromCallable(() -> {
-            Key key = Key.builder().partitionValue(id).build();
-            FranchiseEntity entity = table().getItem(key);
-            if (entity == null) return null;
-            return mapper.toDomain(entity);
-        })
-        .subscribeOn(Schedulers.boundedElastic());
+                    Key key = Key.builder().partitionValue(id).build();
+                    FranchiseEntity entity = table().getItem(key);
+                    if (entity == null) return null;
+                    return mapper.toDomain(entity);
+                })
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
@@ -48,9 +48,8 @@ public class DynamoDbFranchiseRepository implements FranchiseRepository {
         return Mono.fromRunnable(() -> {
                     Key key = Key.builder().partitionValue(id).build();
                     table().deleteItem(key);
-        })
-        .subscribeOn(Schedulers.boundedElastic())
-        .then();
+                })
+                .subscribeOn(Schedulers.boundedElastic())
+                .then();
     }
-
 }
