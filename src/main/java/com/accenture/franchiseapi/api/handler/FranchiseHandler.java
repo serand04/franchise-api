@@ -61,15 +61,60 @@ public class FranchiseHandler {
                 .flatMap(body -> franchiseUseCase.updateBranchName(franchiseId, branchId, body.getName()))
                 .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise))
                 .onErrorResume(RuntimeException.class, e ->
-                        ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(e.getMessage())):
+                        ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(e.getMessage()));
     }
 
     // ── Products ─────────────────────────────────────────────────────────────
 
+    public Mono<ServerResponse> addProduct(ServerRequest request) {
+        String franchiseId = request.pathVariable("franchiseId");
+        String branchId = request.pathVariable("branchId");
+        return request.bodyToMono(AddProductRequest.class)
+                .doOnNext(this::validate)
+                .flatMap(body -> franchiseUseCase.addProduct(franchiseId, branchId, body.getName(), body.getStock()))
+                .flatMap(franchise -> ServerResponse.status(HttpStatus.CREATED).bodyValue(franchise))
+                .onErrorResume(RuntimeException.class, e ->
+                        ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(e.getMessage()));
+    }
+
+    public Mono<ServerResponse> removeProduct(ServerRequest request) {
+        String franchiseId = request.pathVariable("franchiseId");
+        String branchId = request.pathVariable("branchId");
+        String productId = request.pathVariable("productId");
+        return franchiseUseCase.removeProduct(franchiseId, branchId, productId)
+                .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise))
+                .onErrorResume(RuntimeException.class, e ->
+                        ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(e.getMessage()));
+    }
+
+    public Mono<ServerResponse> updateProductStock(ServerRequest request) {
+        String franchiseId = request.pathVariable("franchiseId");
+        String branchId = request.pathVariable("branchId");
+        String productId = request.pathVariable("productId");
+        return request.bodyToMono(UpdateStockRequest.class)
+                .doOnNext(this::validate)
+                .flatMap(body -> franchiseUseCase.updateProductStock(franchiseId, branchId, productId, body.getStock()))
+                .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise))
+                .onErrorResume(RuntimeException.class, e ->
+                        ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(e.getMessage()));
+    }
+
+    public Mono<ServerResponse> updateProductName(ServerRequest request) {
+        String franchiseId = request.pathVariable("franchiseId");
+        String branchId = request.pathVariable("branchid");
+        String productId = request.pathVariable("productId");
+        return request.bodyToMono(UpdateNameRequest.class)
+                .doOnNext(this::validate)
+                .flatMap(body -> franchiseUseCase.updateProductName(franchiseId, branchId, productId, body.getName()))
+                .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise))
+                .onErrorResume(RuntimeException.class, e ->
+                        ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(e.getMessage()));
+    }
+
     // ── Queries ──────────────────────────────────────────────────────────────
 
     public Mono<ServerResponse> getTopStockProducts(ServerRequest request) {
-        String franchiseId = request.pathVariable("franchiseID");
+        String franchiseId = request.pathVariable("franchiseId");
         return ServerResponse.ok()
                 .body(franchiseUseCase.getTopStockProductsPerBranch(franchiseId),
                         com.accenture.franchiseapi.domain.model.TopStockProduct.class)
