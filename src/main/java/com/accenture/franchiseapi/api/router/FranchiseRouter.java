@@ -27,7 +27,7 @@ public class FranchiseRouter {
     @RouterOperations({
             @RouterOperation(path = BASE + "/franchises", method = RequestMethod.POST,
                     beanClass = FranchiseHandler.class, beanMethod = "addFranchise",
-                    operation = @Operation(operationId = "addFranchise", summary = "Add a nre franchise", tags = {"Franchise"})),
+                    operation = @Operation(operationId = "addFranchise", summary = "Add a new franchise", tags = {"Franchise"})),
             @RouterOperation(path = BASE + "/franchises/{franchiseId}", method = RequestMethod.PATCH,
                     beanClass = FranchiseHandler.class, beanMethod = "updateFranchiseName",
                     operation = @Operation(operationId = "updateFranchiseName", summary = "Update franchise name", tags = {"Franchise"})),
@@ -51,12 +51,12 @@ public class FranchiseRouter {
                     operation = @Operation(operationId = "updateProductName", summary = "Update product name", tags = {"Product"})),
             @RouterOperation(path = BASE + "/franchises/{franchiseId}/top-stock-products", method = RequestMethod.GET,
                     beanClass = FranchiseHandler.class, beanMethod = "getTopStockProducts",
-                    operation = @Operation(operationId = "getTopStockProducts", summary = "Get top-Stock product per branch", tags = {"Franchise"}))
+                    operation = @Operation(operationId = "getTopStockProducts", summary = "Get top-stock product per branch", tags = {"Franchise"}))
     })
 
     public RouterFunction<ServerResponse> franchiseRoutes(FranchiseHandler handler) {
         return RouterFunctions.route()
-                // Franchise
+                // Franchises
                 .POST(FRANCHISE, accept(MediaType.APPLICATION_JSON), handler::addFranchise)
                 .PATCH(FRANCHISE + "/{franchiseId}", accept(MediaType.APPLICATION_JSON), handler::updateFranchiseName)
                 // Branches
