@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FranchiseApiApplication {
-
+public class FranchiseApplication {
     public static void main(String[] args) {
-        SpringApplication.run(FranchiseApiApplication.class, args);
+        SpringApplication.run(FranchiseApplication.class, args);
     }
-
 }
